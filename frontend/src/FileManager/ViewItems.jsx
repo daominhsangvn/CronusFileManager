@@ -56,14 +56,14 @@ function ViewItems(props){
       let isSelected = checkIsSelected(item);
 
         return(
-          <Draggable 
-            draggableId={item.id} 
+          <Draggable
+            draggableId={item.id}
             index={index}
             isDragDisabled={item.private}
           >
-              {(provided, snapshot)=>(      
-                  <Box 
-                      onContextMenu={(event)=>handleContextMenuClick(item,event)} 
+              {(provided, snapshot)=>(
+                  <Box
+                      onContextMenu={(event)=>handleContextMenuClick(item,event)}
                       className={clsx(
                           classes.itemFile,
                           {
@@ -77,14 +77,14 @@ function ViewItems(props){
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                   >
-                        {item.private && 
-                            <span className={`icon-lock ${classes.locked}`}/> || 
+                        {item.private &&
+                            <span className={`icon-lock ${classes.locked}`}/> ||
                             <Checkbox className={classes.checkbox} checked={isSelected} onChange={()=>addSelect(item)} value={item.id} />
                         }
                         <span className={classes.extension}>{item.extension}</span>
 
                         <div className={classes.infoBox}>
-                            <img src={getThumb(item)} />
+                            <img src={getThumb(item)} className={classes.thumbImg} />
                         </div>
                         <Tooltip title={item.name}>
                           <div className={classes.itemTitle}>
@@ -102,14 +102,14 @@ function ViewItems(props){
       let fileCuted = isCuted(item);
       let isSelected = checkIsSelected(item);
       return(
-        <Draggable 
+        <Draggable
             index={index}
-            draggableId={item.id} 
+            draggableId={item.id}
             isDragDisabled={item.private}
-            
+
         >
-            {(provided, snapshot)=>( 
-                <Box 
+            {(provided, snapshot)=>(
+                <Box
                     ref={provided.innerRef}
                     className={clsx(
                         classes.itemFile,
@@ -121,26 +121,26 @@ function ViewItems(props){
                         })
                     }
                     onDoubleClick={()=>props.doubleClick(item.path)}
-                    onContextMenu={(event)=>handleContextMenuClick(item,event)} 
+                    onContextMenu={(event)=>handleContextMenuClick(item,event)}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                >  
+                >
                     <Droppable droppableId={item.id} type="CONTAINERITEM" isCombineEnabled>
                         {(provided, snapshot) => (
-                            <div 
+                            <div
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                                 style={getStyle(provided.droppableProps.style, snapshot)}
                             >
-                                {item.private && 
-                                    <span className={`icon-lock ${classes.locked}`}/> || 
+                                {item.private &&
+                                    <span className={`icon-lock ${classes.locked}`}/> ||
                                     <Checkbox className={classes.checkbox} checked={isSelected} onChange={()=>addSelect(item)} value={item.id} />
                                 }
                                 <div className={classes.infoBox}>
                                     <img src={snapshot.isDraggingOver ? toAbsoluteUrl(config.icons.folderopen) : toAbsoluteUrl(config.icons.folder) } />
                                 </div>
                                 <Tooltip title={ <>
-                                                    <b>Name :</b> {item.name} <br /> 
+                                                    <b>Name :</b> {item.name} <br />
                                                     <b>Created :</b> {convertDate(item.created)}
                                                 </>
                                             }>
@@ -164,8 +164,8 @@ function ViewItems(props){
 
       return (
         <Draggable index={index} draggableId={item.id}>
-            {(provided, snapshot)=>(  
-              <TableRow 
+            {(provided, snapshot)=>(
+              <TableRow
                 ref={provided.innerRef}
                 className={clsx(
                     classes.tableListRow,
@@ -176,7 +176,7 @@ function ViewItems(props){
                     })
                 }
                 onDoubleClick={()=>props.doubleClick(item.path)}
-                onContextMenu={(event)=>handleContextMenuClick(item,event)} 
+                onContextMenu={(event)=>handleContextMenuClick(item,event)}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
               >
@@ -186,7 +186,7 @@ function ViewItems(props){
                           <TableCell className={classes.tableCell}><Checkbox checked={isSelected} onChange={()=>addSelect(item)} value={item.id} /></TableCell>
                           <TableCell className={classes.tableCell}><img style={{"width":"20px"}} src={snapshot.isDraggingOver ? toAbsoluteUrl(config.icons.folderopen) : toAbsoluteUrl(config.icons.folder) } /></TableCell>
                           <TableCell className={classes.tableCell} align="left">
-                              <div 
+                              <div
                                   ref={provided.innerRef}
                                   {...provided.droppableProps}
                                   style={getStyle(provided.droppableProps.style, snapshot)}
@@ -211,13 +211,13 @@ function ViewItems(props){
       let isSelected = checkIsSelected(item);
 
       return (
-        <Draggable 
-            draggableId={item.id} 
+        <Draggable
+            draggableId={item.id}
             index={index}
         >
-            {(provided, snapshot)=>(  
-              <TableRow 
-                onContextMenu={(event)=>handleContextMenuClick(item,event)} 
+            {(provided, snapshot)=>(
+              <TableRow
+                onContextMenu={(event)=>handleContextMenuClick(item,event)}
                 className={clsx(
                     classes.tableListRow,
                     {
@@ -231,9 +231,9 @@ function ViewItems(props){
                 {...provided.dragHandleProps}
               >
                 <TableCell className={classes.tableCell}>
-                  <Checkbox checked={isSelected} onChange={()=>addSelect(item)} value={item.id} />  
+                  <Checkbox checked={isSelected} onChange={()=>addSelect(item)} value={item.id} />
                 </TableCell>
-                <TableCell className={classes.tableCell}> 
+                <TableCell className={classes.tableCell}>
                     <img style={{"width":"20px", 'maxHeight': '30px'}} src={getThumb(item)} />
                 </TableCell>
                 <TableCell className={classes.tableCell} align="left">{item.name}</TableCell>
@@ -249,7 +249,7 @@ function ViewItems(props){
         return(
               <TableContainer component={Box}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
-                  
+
                   <TableHead>
                     <TableRow className={classes.tableHead}>
                       <TableCell style={{"width": '20px'}}></TableCell>
@@ -265,11 +265,11 @@ function ViewItems(props){
                         <TableBody ref={provided.innerRef} {...provided.droppableProps} >
 
                           {props.filesList.map((item,index) => (
-                                item.type === 'folder' && <ListFolderItem key={index} index={index} item={item} /> 
+                                item.type === 'folder' && <ListFolderItem key={index} index={index} item={item} />
                           ))}
 
                           {props.filesList.map((item,index) => (
-                                item.type === 'file' && <ListFileItem key={index} index={index} item={item} /> 
+                                item.type === 'file' && <ListFileItem key={index} index={index} item={item} />
                           ))}
 
                           {provided.placeholder}
@@ -288,16 +288,16 @@ function ViewItems(props){
 
           <Droppable droppableId="mainDroppablContainer" type="CONTAINERITEM" isCombineEnabled>
             {(provided, snapshot) => (
-              <div 
+              <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
                 {props.filesList.map((item,index) => (
-                      item.type === 'folder' && <FolderItem  key={index} index={index} item={item} /> 
+                      item.type === 'folder' && <FolderItem  key={index} index={index} item={item} />
                 ))}
 
                 {props.filesList.map((item,index) => (
-                      item.type === 'file' && <FileItem  key={index} index={index} item={item} /> 
+                      item.type === 'file' && <FileItem  key={index} index={index} item={item} />
                 ))}
 
                 {provided.placeholder}
@@ -329,7 +329,7 @@ const mapStateToProps = store => ({
     translations : store.dashboard.translations,
     lang : store.dashboard.lang,
 });
-  
+
 const mapDispatchToProps = dispatch => ({
 
 });

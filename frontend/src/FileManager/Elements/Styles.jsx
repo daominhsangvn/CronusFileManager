@@ -151,6 +151,9 @@ export default makeStyles(theme => ({
         display: 'block'
       }
     },
+    thumbImg: {
+        objectFit: 'contain'
+    },
     loadingBlock: {
       position: 'absolute',
       zIndex: '55',

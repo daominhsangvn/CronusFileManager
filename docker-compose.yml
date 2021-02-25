@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    restart: always
+    volumes:
+      - ./uploads:/usr/src/app/uploads
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3131:3131"
+    expose:
+      - "3131"
+  frontend:
+    build: ./frontend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - BACKEND=http://localhost:3131
+    ports:
+      - "1301:80"
+    expose:
+      - "1301"

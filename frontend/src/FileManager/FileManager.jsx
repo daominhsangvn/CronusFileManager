@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
-import { 
-        setSelectedFiles, 
+import {
+        setSelectedFiles,
         inverseSelectedFiles,
         selectAllFiles,
         unsetSelectedFiles,
@@ -80,7 +80,7 @@ const useStyles = makeStyles(theme => ({
       },
 }));
 
-function FileManager(props){    
+function FileManager(props){
     const classes = useStyles();
     var {selectCallback, height} = props;
     height = (height !== undefined || height > 300 ? `${height}px` : '300px');
@@ -111,7 +111,7 @@ function FileManager(props){
             case 'folderChange':
                     operations.handleSetMainFolder(historyInfo.path, true);
                 break;
-        
+
             default:
                 break;
         }
@@ -147,7 +147,7 @@ function FileManager(props){
         handleSelectAll :() => {
             props.selectAllFiles();
         },
-        
+
         handleGotoParent: () => {
             props.unsetSelectedFiles();
             operations.handleSetMainFolder(props.foldersList.path);
@@ -176,7 +176,7 @@ function FileManager(props){
                 timer: 3000,
             }]);
         },
-    
+
         handleCut : () => {
             props.cutToBufferFiles();
             setMessages([{
@@ -186,7 +186,7 @@ function FileManager(props){
                 timer: 3000,
             }]);
         },
-    
+
         handlePaste : ()=> {
             let files = props.bufferedItems.files.map((item)=> item.path);
 
@@ -218,7 +218,7 @@ function FileManager(props){
                     timer: 3000,
                 }]);
             });
-           
+
         },
 
         handleDelete : ()=> {
@@ -244,7 +244,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Deleting selected files and folders: ${props.selectedFiles.length} items `,
                 description:`All selected files and folder will remove without recover`,
@@ -253,10 +253,10 @@ function FileManager(props){
                 nameInputSets:{}
             });
         },
-    
+
         handleEmptyFolder : ()=> {
             var path = props.selectedFolder;
-            
+
             const handleEmptySubmit = ()=>{
                 setPopup({
                     open: false
@@ -278,7 +278,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Deleting all files and folders in ${path}`,
                 description:`All files and folder will remove without recover`,
@@ -307,7 +307,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Creating new file`,
                 description:'Only allowed file extensions can be created. Otherwise will be ignored by server.',
@@ -320,7 +320,7 @@ function FileManager(props){
                 }
             });
         },
-    
+
         handleNewFolder : ()=> {
             var folderName = 'newfolder';
             const handleNewFolderChange = value => {
@@ -340,7 +340,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Creating new folder`,
                 description:'Dont use spaces, localised symbols or emojies. This can affect problems',
@@ -353,7 +353,7 @@ function FileManager(props){
                 }
             });
         },
-    
+
         handleRename : ()=> {
             var item = props.selectedFiles[0];
             var renameTxt = item.name;
@@ -375,7 +375,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Renaming of ${item.name}`,
                 handleClose: handleClose,
@@ -441,7 +441,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Creating new archive`,
                 description:'Create a new archive with all selected files. If there is already file with this name it will replace',
@@ -473,7 +473,7 @@ function FileManager(props){
                     }]);
                 });
             }
-                        
+
             handleClickPopupOpen({
                 title:`Extract all files from archive to ${destination}`,
                 description:'All files will extracted. If they are existed in folder alreadt they will replaced.',
@@ -519,7 +519,7 @@ function FileManager(props){
                 nameInputSets: {}
             });
         },
-    
+
         handleReturnCallBack : (item)=> {
             console.log('handleReturnCallBack Method Called', item);
             if(selectCallback) {
@@ -572,7 +572,7 @@ function FileManager(props){
                         message: error.message
                     }]);
                 });
-       
+
             }
             setEditImage({
                 open:true,
@@ -616,7 +616,7 @@ function FileManager(props){
                     destination = file.path;
                   }
                 });
-        
+
                 if(destination !== undefined && files.length !== 0){
                     props.pasteFiles(files, 'cut', destination).then(result =>{
                         operations.handleReload();
@@ -627,12 +627,12 @@ function FileManager(props){
                             timer: 3000,
                         }]);
                     }).catch((error)=>{
-                      
+
                     });
                 }
-               
+
               } catch (error) {
-                
+
               }
               setLoading(!isloading);
               console.log('Drag ended',result);
@@ -653,7 +653,7 @@ function FileManager(props){
 
                 case 'file':
                     return props.selectedFiles[0].type === 'file';
-            
+
                 default:
                     return false;
             }
@@ -700,7 +700,7 @@ function FileManager(props){
 
         },
         newFile:{
-            title: 'Few File',
+            title: 'New File',
             icon: 'icon-add',
             onClick: operations.handleNewFile,
         },
@@ -838,7 +838,7 @@ function FileManager(props){
             icon: expand ? 'icon-minimize' :'icon-resize',
             onClick: operations.handleFullExpand
         }
-        
+
     }
 
     const aviableButtons = {
@@ -899,11 +899,11 @@ function FileManager(props){
                             <Collapse in={selecMessages}>
                                 <Box className={classes.infoMessages}>
                                     {props.selectedFiles.length > 0 && <div className="text"><b>{props.selectedFiles.length}</b> items are selected</div> }
-                                    {props.bufferedItems.files.length > 0 && 
+                                    {props.bufferedItems.files.length > 0 &&
                                         <div className="text">
                                             <b>{props.bufferedItems.files.length}</b> {props.bufferedItems.type === 'cut' ? 'cuted' : 'copied'} items in buffer
                                             (<a href="#" onClick={(e)=>{e.preventDefault(); props.clearBufferFiles()}}>Clear</a>)
-                                        </div> 
+                                        </div>
                                     }
                                 </Box>
                             </Collapse>
@@ -951,7 +951,7 @@ const mapDispatchToProps = dispatch => ({
     unzip: (file, destination) => dispatch(unzip(file, destination)),
     listViewChange: (type) => dispatch(listViewChange(type)),
     clearBufferFiles: () => dispatch(clearBufferFiles()),
-    
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FileManager);
